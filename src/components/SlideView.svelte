@@ -68,25 +68,29 @@
     right: calc(var(--size) / 2);
   }
 
-  .slide {
-    background-color: white;
-
+  :global(html) {
     --slide-width: min(100vw, calc(400vh / 3));
     --slide-height: min(75vw, 100vh);
+
+    font-size: calc(var(--slide-width) / 40);
+  }
+
+  .slide {
+    background-color: white;
 
     width: var(--slide-width);
     height: var(--slide-height);
   }
   .slide :global(h1) {
-    font-size: calc(var(--slide-width) / 20);
+    font-size: 2rem;
   }
   .slide :global(h2) {
-    font-size: calc(var(--slide-width) / 24);
+    font-size: 1.6rem;
   }
   .slide :global(h3) {
-    font-size: calc(var(--slide-width) / 28);
+    font-size: 1.4rem;
   }
   .slide :global(h4, h5, h6, p, li) {
-    font-size: calc(var(--slide-width) / 32);
+    font-size: 1.2rem;
   }
 </style>
