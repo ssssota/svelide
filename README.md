@@ -13,7 +13,8 @@ Svelte + Slide = Svelide
     - Create PDF with print
   - Dynamically page
     - Use JavaScript(TypeScript)
-    - Use CSS
+    - Use CSS (SCSS)
+      - `<style lang="scss"></style>`
   - Build for SPA
 - Publish
   - Build and Deploy
@@ -34,18 +35,24 @@ cd slide-directory-name
 
 ```sh
 npm install
+# yarn
+# pnpm install
 ```
 
 ### Preview
 
 ```sh
 npm run dev
+# yarn dev
+# pnpm dev
 ```
 
 ### Build
 
 ```sh
 npm run build
+# yarn build
+# pnpm build
 ```
 
 ### Custom
