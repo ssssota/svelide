@@ -38,7 +38,7 @@
     top: 0;
   }
   .left.cursor {
-    cursor: url(./images/left.svg) 0 0, pointer;
+    cursor: url(../images/left.svg) 0 0, pointer;
   }
   .right {
     position: absolute;
@@ -48,7 +48,7 @@
     top: 0;
   }
   .right.cursor {
-    cursor: url(./images/right.svg) 0 0, pointer;
+    cursor: url(../images/right.svg) 0 0, pointer;
   }
   :root {
     --slide-width: min(100vw, calc(400vh / 3));
