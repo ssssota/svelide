@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from "../utils/page";
 
-  export let onLeftClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined;
-  export let onRightClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined;
+  export let onLeftClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined = undefined;
+  export let onRightClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined = undefined;
   export let pageCount: boolean | undefined = undefined;
 </script>
 

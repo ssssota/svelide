@@ -38,7 +38,7 @@
   <ProgressBar progress={($page - 1) / (pages.length - 1)} />
 {:else}
   {#each pages as p}
-    <SlideView onLeftClick={undefined} onRightClick={undefined}>
+    <SlideView>
       <svelte:component this={p} />
     </SlideView>
   {/each}
