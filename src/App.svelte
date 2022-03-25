@@ -5,6 +5,7 @@
   import TitlePage from "./pages/TitlePage.svelte";
   import ContentsPage from "./pages/ContentsPage.svelte";
   import Usage from "./pages/Usage.svelte";
+  import './global.css';
   export let listView = false;
 
   const pages = [
