@@ -1,45 +1,45 @@
 <script lang="ts">
-  import ProgressBar from "./components/ProgressBar.svelte";
   import SlideView from "./components/SlideView.svelte";
-  import { page } from "./utils/page";
-  import TitlePage from "./pages/TitlePage.svelte";
-  import ContentsPage from "./pages/ContentsPage.svelte";
-  import Usage from "./pages/Usage.svelte";
-  import './global.css';
-  export let listView = false;
+  import "./global.css";
+  import HorizontalLayout from "./components/HorizontalLayout.svelte";
+  import VerticalLayout from "./components/VerticalLayout.svelte";
+  import slides from "$slides";
+  const { listView } = $props<{ listView?: boolean }>();
+  let scrollFn = $state<(() => void)[]>([]);
+  let page = $state(0);
 
-  const pages = [
-    TitlePage,
-    ContentsPage,
-    Usage,
-    // INSERT YOUR PAGE HERE!
-  ];
+  $effect(() => {
+    window.history.replaceState(null, "", `#${page}`);
+  });
 
   const handleKeydown = (e: KeyboardEvent) => {
     switch (e.code) {
       case "ArrowRight":
       case "Space":
       case "Enter":
-        page.next();
+        // page.next();
         break;
       case "ArrowLeft":
-        page.prev();
+        // page.prev();
         break;
     }
   };
+  const Layout = listView ? VerticalLayout : HorizontalLayout;
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-{#if !listView}
-  <SlideView onLeftClick={page.prev} onRightClick={page.next}>
-    <svelte:component this={pages[$page - 1]} />
-  </SlideView>
-  <ProgressBar progress={($page - 1) / (pages.length - 1)} />
-{:else}
-  {#each pages as p}
-    <SlideView>
-      <svelte:component this={p} />
+<Layout>
+  {#each slides as Slide, i}
+    {@const id = i.toString()}
+    <SlideView
+      {id}
+      bind:scrollIntoView={scrollFn[i]}
+      onleftclick={i > 0 ? scrollFn[i - 1] : undefined}
+      onrightclick={i < slides.length - 1 ? scrollFn[i + 1] : undefined}
+      onscreenenter={() => (page = i)}
+    >
+      <Slide />
     </SlideView>
   {/each}
-{/if}
+</Layout>

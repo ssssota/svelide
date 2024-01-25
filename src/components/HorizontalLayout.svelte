@@ -9,12 +9,15 @@
 
 <style>
 	div {
-		position: relative;
-		width: 100%;
-		height: 100%;
 		display: flex;
-		justify-content: center;
 		align-items: center;
-		flex-direction: column;
+		height: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+	}
+	div > :global(*) {
+		flex-shrink: 0;
+		scroll-snap-align: center;
 	}
 </style>

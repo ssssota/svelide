@@ -1,20 +1,20 @@
 <script lang="ts">
-  export let progress = 0;
+	const { progress } = $props<{ progress: number }>();
 </script>
 
-<div  style={`transform: scaleX(${progress});`} />
+<div style="transform: scaleX({progress});" />
 
 <style>
-  div {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
+	div {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 5px;
 
-    background-color: cadetblue;
+		background-color: cadetblue;
 
-    transition: transform 0.1s linear;
-    transform-origin: center left;
-  }
+		transition: transform 0.1s linear;
+		transform-origin: center left;
+	}
 </style>

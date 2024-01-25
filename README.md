@@ -1,26 +1,27 @@
 # Svelide
 
-Make your slide with Svelte(HTML+CSS+JS).
+> Svelte + Slide = Svelide
 
-Svelte + Slide = Svelide
+Make your slide with Svelte(HTML+CSS+JS).
 
 ## Features
 
 - Make slide
   - Preview
-  - List view
-    - Set `#list` to URL hash
-    - Create PDF with print
-  - Dynamically page
+  - List view (optimized for PDF export)
+    1. Run `npm run dev`
+    2. Open `http://localhost:5173/list`
+    3. Print to PDF
+  - Dynamically slide
     - Use JavaScript(TypeScript)
     - Use CSS (SCSS)
-      - `<style lang="scss"></style>`
   - Build for SPA
 - Publish
   - Build and Deploy
-    - GitHub Pages
-      - GitHub Actions
+    - Configured GitHub Actions for GitHub Pages
     - Other platforms
+- Fully customizable
+  - This is just a template. NOT a framework.
 
 ## Usage
 
@@ -57,20 +58,19 @@ npm run build
 
 ### Custom
 
-- `/public`
+- `public/`
   - Static files
-  - `index.html`
-    - title
-    - OGP settings
-    - meta tags
   - `global.css`
   - `favicon.png`
-- `/src`
-  - `App.svelte`
-    - Page controller
-  - `pages`
-    - Insert your pages!
+- `src/`
+  - `slides/`
+    - Insert your slides!
+- `index.html`
+  - title
+  - OGP settings
+  - meta tags
 
 ## Examples
 
 - [Svelteを説く。](https://ssssota.github.io/svelte-intro-lt/)
+- [Svelteでライブラリを作る](https://ssssota.github.io/make-library-with-svelte/)

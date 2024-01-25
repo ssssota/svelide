@@ -1,77 +1,135 @@
 <script lang="ts">
-  export let onLeftClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined = undefined;
-  export let onRightClick: svelte.JSX.EventHandler<MouseEvent, HTMLDivElement> | undefined = undefined;
+	import type { Snippet } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
+	import leftCursor from './cursors/left.svg?url';
+	import rightCursor from './cursors/right.svg?url';
+	const { id, onleftclick, onrightclick, onscreenenter, children } = $props<{
+		id?: string;
+		onleftclick?: MouseEventHandler<HTMLButtonElement>;
+		onrightclick?: MouseEventHandler<HTMLButtonElement>;
+		onscreenenter?: () => void;
+		children: Snippet;
+	}>();
+	let ref = $state<HTMLElement>();
+	export function scrollIntoView() {
+		ref?.scrollIntoView({ behavior: 'instant' });
+	}
+	$effect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) onscreenenter?.();
+			},
+			{ rootMargin: '0px 0px 0px 0px', threshold: 0.5 }
+		);
+		if (ref) observer.observe(ref);
+		return () => observer.disconnect();
+	});
 </script>
 
-<div class="wrapper">
-  <section class="slide">
-    <slot />
-  </section>
-  {#if onLeftClick != null}
-    <div class:cursor={onLeftClick != null} class="left" on:click={onLeftClick} />
-  {/if}
-  {#if onRightClick != null}
-    <div class:cursor={onRightClick != null} class="right" on:click={onRightClick} />
-  {/if}
+<div {id} class="wrapper" bind:this={ref}>
+	<section class="slide">
+		{@render children()}
+	</section>
+	{#if onleftclick != null}
+		<button
+			class="cursor left"
+			onclick={onleftclick}
+			style="cursor:url('{leftCursor}') 0 8, pointer"
+		/>
+	{/if}
+	{#if onrightclick != null}
+		<button
+			class="cursor right"
+			onclick={onrightclick}
+			style="cursor:url('{rightCursor}') 16 8, pointer"
+		/>
+	{/if}
 </div>
 
 <style>
-  .wrapper {
-    background-color: black;
-    width: 100%;
-    height: 100%;
+	.wrapper {
+		background-color: black;
+		width: 100vw;
+		width: 100dvw;
+		height: 100vh;
+		height: 100dvh;
 
-    padding: 0;
-    margin: 0;
+		padding: 0;
+		margin: 0;
 
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-  .left {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-  .left.cursor {
-    cursor: url(../images/left.svg) 0 0, pointer;
-  }
-  .right {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    right: 0;
-    top: 0;
-  }
-  .right.cursor {
-    cursor: url(../images/right.svg) 0 0, pointer;
-  }
-  :root {
-    --slide-width: min(100vw, calc(400vh / 3));
-    --slide-height: min(75vw, 100vh);
-    --base-font-size: calc(var(--slide-width) / 40);
-  }
+	.cursor {
+		border: 0;
+		background: transparent;
+	}
+	.left {
+		position: absolute;
+		width: 10%;
+		height: 100%;
+		left: 0;
+		top: 0;
+	}
+	.right {
+		position: absolute;
+		width: 10%;
+		height: 100%;
+		right: 0;
+		top: 0;
+	}
+	:root {
+		--slide-width: min(100vw, calc(400vh / 3));
+		--slide-height: min(75vw, 100vh);
+		--base-font-size: calc(var(--slide-width) / 40);
+	}
 
-  .slide {
-    background-color: var(--background-color, white);
+	.slide {
+		background-color: var(--background-color, white);
 
-    width: var(--slide-width);
-    height: var(--slide-height);
-  }
-  .slide :global(h1) {
-    font-size: calc(var(--base-font-size) * 2);
-  }
-  .slide :global(h2) {
-    font-size: calc(var(--base-font-size) * 1.6);
-  }
-  .slide :global(h3) {
-    font-size: calc(var(--base-font-size) * 1.4);
-  }
-  .slide :global(h4), .slide :global(h5), .slide :global(h6), .slide :global(p), .slide :global(li) {
-    font-size: calc(var(--base-font-size) * 1.2);
-  }
+		width: var(--slide-width);
+		height: var(--slide-height);
+	}
+	.slide :global(h1) {
+		font-size: calc(var(--base-font-size) * 2);
+	}
+	.slide :global(h2) {
+		font-size: calc(var(--base-font-size) * 1.6);
+	}
+	.slide :global(h3) {
+		font-size: calc(var(--base-font-size) * 1.4);
+	}
+	.slide :global(h4),
+	.slide :global(h5),
+	.slide :global(h6),
+	.slide :global(p),
+	.slide :global(li),
+	.slide :global(dl),
+	.slide :global(table),
+	.slide :global(blockquote),
+	.slide :global(pre) {
+		font-size: calc(var(--base-font-size) * 1.2);
+	}
+	.slide :global(small) {
+		font-size: calc(var(--base-font-size) * 0.8);
+	}
+	.slide :global(li p) {
+		margin: 0;
+	}
+	.slide :global(pre) {
+		background-color: #f0f0f0;
+		padding: 0.5em;
+		border-radius: 0.5em;
+	}
+	.slide :global(code) {
+		color: #2f12b3;
+	}
+	@media print {
+		.slide {
+			page-break-after: always;
+		}
+	}
 </style>
