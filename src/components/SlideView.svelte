@@ -3,13 +3,14 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 	import leftCursor from './cursors/left.svg?url';
 	import rightCursor from './cursors/right.svg?url';
-	const { id, onleftclick, onrightclick, onscreenenter, children } = $props<{
+	type Props = {
 		id?: string;
 		onleftclick?: MouseEventHandler<HTMLButtonElement>;
 		onrightclick?: MouseEventHandler<HTMLButtonElement>;
 		onscreenenter?: () => void;
 		children: Snippet;
-	}>();
+	};
+	let { id, onleftclick, onrightclick, onscreenenter, children }: Props = $props();
 	let ref = $state<HTMLElement>();
 	export function scrollIntoView() {
 		ref?.scrollIntoView({ behavior: 'instant' });
@@ -35,14 +36,14 @@
 			class="cursor left"
 			onclick={onleftclick}
 			style="cursor:url('{leftCursor}') 0 8, pointer"
-		/>
+		></button>
 	{/if}
 	{#if onrightclick != null}
 		<button
 			class="cursor right"
 			onclick={onrightclick}
 			style="cursor:url('{rightCursor}') 16 8, pointer"
-		/>
+		></button>
 	{/if}
 </div>
 

@@ -1,7 +1,7 @@
-import { createRoot } from 'svelte';
+import { mount } from 'svelte';
 import App from './App.svelte';
 
-const app = createRoot(App, {
+const app = mount(App, {
 	target: document.getElementById('app')!,
 	props: {
 		listView: location.hash === '#list'

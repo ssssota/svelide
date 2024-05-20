@@ -4,8 +4,9 @@
   import HorizontalLayout from "./components/HorizontalLayout.svelte";
   import VerticalLayout from "./components/VerticalLayout.svelte";
   import slides from "$slides";
-  const { listView } = $props<{ listView?: boolean }>();
-  let scrollFn = $state<(() => void)[]>([]);
+  type Props = { listView?: boolean };
+  let { listView }: Props = $props();
+  let scrollFn = $state<SlideView[]>([]);
   let page = $state(0);
 
   $effect(() => {
@@ -34,9 +35,9 @@
     {@const id = i.toString()}
     <SlideView
       {id}
-      bind:scrollIntoView={scrollFn[i]}
-      onleftclick={i > 0 ? scrollFn[i - 1] : undefined}
-      onrightclick={i < slides.length - 1 ? scrollFn[i + 1] : undefined}
+      bind:this={scrollFn[i]}
+      onleftclick={scrollFn[i - 1]?.scrollIntoView}
+      onrightclick={scrollFn[i + 1]?.scrollIntoView}
       onscreenenter={() => (page = i)}
     >
       <Slide />
