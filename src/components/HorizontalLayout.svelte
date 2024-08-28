@@ -18,6 +18,11 @@
 		overflow-x: auto;
 		overflow-y: hidden;
 		scroll-snap-type: x mandatory;
+
+		scrollbar-width: none;
+	}
+	div::-webkit-scrollbar {
+		display: none;
 	}
 	div > :global(*) {
 		flex-shrink: 0;
